@@ -1,7 +1,7 @@
 //fetch api url of trivia api
 let apiUrl = "https://opentdb.com/api.php?amount=10&type=multiple";
 const categoryNumber = localStorage.getItem("category");
-let maxTime = 5;
+let maxTime = 5*60;
 let timeLeft = maxTime;
 
 if(categoryNumber != "any")
@@ -94,10 +94,17 @@ async function start() {
         }
 
     });
+
+    
+function convertToMinutesAndSeconds(timeLeft) {
+    let minutes = Math.floor(timeLeft / 60);
+    let remainingSeconds = timeLeft % 60;
+    return `${minutes} : ${remainingSeconds}`;
+  }
     setInterval(()=>{
         timeLeft--;
         const timeLeftSpan = document.getElementById("timeLeft");
-        timeLeftSpan.innerHTML = timeLeft;
+        timeLeftSpan.innerHTML = convertToMinutesAndSeconds(timeLeft);
         if(timeLeft == 0){
             alert("Time out");
             localStorage.setItem("score", score);
